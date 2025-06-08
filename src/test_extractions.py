@@ -27,5 +27,19 @@ class Testextractions(unittest.TestCase):
          )
         self.assertListEqual([],matches)
 
+
+    def test_extract_title_function(self):
+        Hello = extract_title("# Hello")
+        self.assertEqual("Hello",Hello)
+
+    def test_extract_title_with_lines(self):
+        Hello = extract_title("# Hello\nHere's the deal, **I like Tolkien**.")
+        self.assertEqual("Hello\nHere's the deal, **I like Tolkien**.",Hello)
+
+    def test_extraction_exception(self):
+        Hello = "Hello\nHere's the deal, **I like Tolkien**."
+        self.assertRaises(Exception,extract_title, Hello)
+
+
 if __name__ == "__main_":
     unittest.main()   
