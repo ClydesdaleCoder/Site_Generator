@@ -34,7 +34,7 @@ class Testextractions(unittest.TestCase):
 
     def test_extract_title_with_lines(self):
         Hello = extract_title("# Hello\nHere's the deal, **I like Tolkien**.")
-        self.assertEqual("Hello\nHere's the deal, **I like Tolkien**.",Hello)
+        self.assertEqual("Hello",Hello)
 
     def test_extraction_exception(self):
         Hello = "Hello\nHere's the deal, **I like Tolkien**."

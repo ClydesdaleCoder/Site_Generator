@@ -9,8 +9,11 @@ def extract_markdown_links(text):
     return links
 
 def extract_title(markdown):
-    if markdown.startswith("#"):
-        return markdown.strip(" # ")
-
-    if not markdown.startswith("#"):
+    if not markdown.startswith("# "):
         raise Exception("Missing h1 Header")
+    
+    if markdown.startswith("#"):
+        no_header = markdown.strip(" # ")
+        title_sep = no_header.split("\n",1)
+        return title_sep[0]
+
