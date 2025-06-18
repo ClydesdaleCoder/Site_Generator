@@ -2,7 +2,22 @@ import os
 
 from block_markdown import *
 from extractions import *
+from pathlib import Path
 
+def generate_page_recursively(dir_path_content,template_path, dest_dir_path): 
+    #crawl through directories
+    for dirpath,dirnames,filenames in os.walk(dir_path_content): 
+        for filename in filenames: #handles the files
+            #create new destination file
+            new_dest  = os.path.join(dest_dir_path,(Path(dirpath).relative_to(dir_path_content)))
+            new_dest_file = os.path.join(new_dest , filename)
+            final_dest_file = new_dest_file.replace(".md" , '.html') 
+
+            #create new source file path
+            new_source_file = os.path.join (dirpath , filename)
+            
+            #call the generation
+            generate_page(new_source_file, template_path , final_dest_file)
 
 def generate_page(from_path, template_path, dest_path):
     print (f'Generating page from {from_path} to {dest_path} using {template_path}')

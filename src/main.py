@@ -19,9 +19,9 @@ def main():
     print ("Copying static files to public directory...")    
     stat_to_pub_copy(static, public) 
     
-    generate_page(os.path.join(content,"index.md"),
+    generate_page_recursively(content,
             template,
-            os.path.join(public,"index.html")
+            public
             )
 
 
