@@ -4,7 +4,7 @@ from block_markdown import *
 from extractions import *
 from pathlib import Path
 
-def generate_page_recursively(dir_path_content,template_path, dest_dir_path): 
+def generate_page_recursively(dir_path_content,template_path, dest_dir_path, basepath): 
     #crawl through directories
     for dirpath,dirnames,filenames in os.walk(dir_path_content): 
         for filename in filenames: #handles the files
@@ -17,9 +17,9 @@ def generate_page_recursively(dir_path_content,template_path, dest_dir_path):
             new_source_file = os.path.join (dirpath , filename)
             
             #call the generation
-            generate_page(new_source_file, template_path , final_dest_file)
+            generate_page(new_source_file, template_path , final_dest_file,basepath)
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path,basepath):
     print (f'Generating page from {from_path} to {dest_path} using {template_path}')
     
     from_file = open(from_path, "r")
@@ -35,7 +35,7 @@ def generate_page(from_path, template_path, dest_path):
 
     from_title =extract_title(markdown_content)
 
-    final_page = template.replace("{{ Title }}",from_title).replace("{{ Content }}", from_html)
+    final_page = template.replace("{{ Title }}",from_title).replace("{{ Content }}", from_html).replace('href="/',f'href="{basepath}').replace('src="/',f'src="{basepath}'  )
     
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":

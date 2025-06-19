@@ -1,4 +1,5 @@
 import os
+import sys
 from textnode import TextNode, TextType
 
 from static_pieces import*
@@ -6,22 +7,27 @@ from generation_funcs import *
 
     
 static = ("./static")
-public =  ("./public")
 content = ("./content")
 template = ("./template.html")
+default_basepath = "/"
+docs = ("./docs")
 
 def main():
-   
-    print("Deleting public directory...")
-    if os.path.exists(public):
-        shutil.rmtree(public)
+    basepath = default_basepath
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
 
-    print ("Copying static files to public directory...")    
-    stat_to_pub_copy(static, public) 
+    print("Deleting docs directory...")
+    if os.path.exists(docs):
+        shutil.rmtree(docs)
+
+    print ("Copying static files to docs directory...")    
+    stat_to_pub_copy(static, docs) 
     
     generate_page_recursively(content,
             template,
-            public
+            docs,
+            basepath
             )
 
 
